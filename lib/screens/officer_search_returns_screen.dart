@@ -11,7 +11,8 @@ class OfficerSearchReturnsScreen extends StatefulWidget {
       _OfficerSearchReturnsScreenState();
 }
 
-class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen> {
+class _OfficerSearchReturnsScreenState
+    extends State<OfficerSearchReturnsScreen> {
   late TextEditingController _searchController;
   String _selectedStatus = 'All';
   String _selectedRegion = 'All Regions';
@@ -90,8 +91,7 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
 
   List<Map<String, String>> get _filteredReturns {
     return _returns.where((item) {
-      final matchesSearch =
-          _searchController.text.isEmpty ||
+      final matchesSearch = _searchController.text.isEmpty ||
           item['species']!
               .toLowerCase()
               .contains(_searchController.text.toLowerCase()) ||
@@ -102,8 +102,8 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
       final matchesStatus =
           _selectedStatus == 'All' || item['status'] == _selectedStatus;
 
-      final matchesRegion = _selectedRegion == 'All Regions' ||
-          item['region'] == _selectedRegion;
+      final matchesRegion =
+          _selectedRegion == 'All Regions' || item['region'] == _selectedRegion;
 
       final matchesSpecies = _selectedSpecies == 'All Species' ||
           item['species'] == _selectedSpecies;
@@ -172,30 +172,30 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
                 spacing: 8,
                 children: _statuses
                     .map((status) => FilterChip(
-                  label: Text(status),
-                  selected: _selectedStatus == status,
-                  onSelected: (selected) {
-                    setState(() {
-                      _selectedStatus = status;
-                    });
-                  },
-                  selectedColor:
-                      AppColors.primaryGreen.withOpacity(0.2),
-                  backgroundColor: AppColors.lightGrey,
-                  labelStyle: TextStyle(
-                    color: _selectedStatus == status
-                        ? AppColors.primaryGreen
-                        : AppColors.mediumGrey,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ))
+                          label: Text(status),
+                          selected: _selectedStatus == status,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedStatus = status;
+                            });
+                          },
+                          selectedColor:
+                              AppColors.primaryGreen.withOpacity(0.2),
+                          backgroundColor: AppColors.lightGrey,
+                          labelStyle: TextStyle(
+                            color: _selectedStatus == status
+                                ? AppColors.primaryGreen
+                                : AppColors.mediumGrey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ))
                     .toList(),
               ),
               const SizedBox(height: 12),
 
               // Region Dropdown
               DropdownButtonFormField<String>(
-                value: _selectedRegion,
+                initialValue: _selectedRegion,
                 decoration: InputDecoration(
                   labelText: 'Region',
                   prefixIcon: const Icon(
@@ -208,9 +208,9 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
                 ),
                 items: _regions
                     .map((region) => DropdownMenuItem(
-                  value: region,
-                  child: Text(region),
-                ))
+                          value: region,
+                          child: Text(region),
+                        ))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -222,7 +222,7 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
 
               // Species Dropdown
               DropdownButtonFormField<String>(
-                value: _selectedSpecies,
+                initialValue: _selectedSpecies,
                 decoration: InputDecoration(
                   labelText: 'Species',
                   prefixIcon: const Icon(
@@ -235,9 +235,9 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
                 ),
                 items: _species
                     .map((species) => DropdownMenuItem(
-                  value: species,
-                  child: Text(species),
-                ))
+                          value: species,
+                          child: Text(species),
+                        ))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -312,125 +312,125 @@ class _OfficerSearchReturnsScreenState extends State<OfficerSearchReturnsScreen>
                 Column(
                   children: _filteredReturns
                       .map(
-                    (item) => Card(
-                      elevation: 0,
-                      margin: const EdgeInsets.only(bottom: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: const BorderSide(
-                          color: AppColors.lightGrey,
-                        ),
-                      ),
-                      child: InkWell(
-                        onTap: () =>
-                            context.push('/officer-dashboard/return-details/1'),
-                        borderRadius: BorderRadius.circular(12),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                        (item) => Card(
+                          elevation: 0,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: const BorderSide(
+                              color: AppColors.lightGrey,
+                            ),
+                          ),
+                          child: InkWell(
+                            onTap: () => context
+                                .push('/officer-dashboard/return-details/1'),
+                            borderRadius: BorderRadius.circular(12),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    item['species']!,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.darkGrey,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: _getStatusColor(item['status']!)
-                                          .withOpacity(0.1),
-                                      borderRadius:
-                                          BorderRadius.circular(16),
-                                      border: Border.all(
-                                        color: _getStatusColor(
-                                            item['status']!),
-                                        width: 1,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        item['species']!,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.darkGrey,
+                                        ),
                                       ),
-                                    ),
-                                    child: Text(
-                                      item['status']!,
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w700,
-                                        color: _getStatusColor(
-                                            item['status']!),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 6,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color:
+                                              _getStatusColor(item['status']!)
+                                                  .withOpacity(0.1),
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          border: Border.all(
+                                            color: _getStatusColor(
+                                                item['status']!),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          item['status']!,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: _getStatusColor(
+                                                item['status']!),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.person_outline,
+                                        size: 16,
+                                        color: AppColors.mediumGrey,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        item['hunter']!,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.darkGrey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        size: 16,
+                                        color: AppColors.mediumGrey,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        item['region']!,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.mediumGrey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.calendar_today,
+                                        size: 16,
+                                        color: AppColors.mediumGrey,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        item['date']!,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: AppColors.mediumGrey,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 12),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.person_outline,
-                                    size: 16,
-                                    color: AppColors.mediumGrey,
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    item['hunter']!,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.darkGrey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 16,
-                                    color: AppColors.mediumGrey,
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    item['region']!,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.mediumGrey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today,
-                                    size: 16,
-                                    color: AppColors.mediumGrey,
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    item['date']!,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors.mediumGrey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
+                      )
                       .toList(),
                 ),
               const SizedBox(height: 24),

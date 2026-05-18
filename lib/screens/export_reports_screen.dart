@@ -94,23 +94,23 @@ class _ExportReportsScreenState extends State<ExportReportsScreen> {
                 spacing: 8,
                 children: _formats
                     .map((format) => FilterChip(
-                  label: Text(format),
-                  selected: _selectedFormat == format,
-                  onSelected: (selected) {
-                    setState(() {
-                      _selectedFormat = format;
-                    });
-                  },
-                  selectedColor:
-                      AppColors.primaryGreen.withOpacity(0.2),
-                  backgroundColor: AppColors.lightGrey,
-                  labelStyle: TextStyle(
-                    color: _selectedFormat == format
-                        ? AppColors.primaryGreen
-                        : AppColors.mediumGrey,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ))
+                          label: Text(format),
+                          selected: _selectedFormat == format,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedFormat = format;
+                            });
+                          },
+                          selectedColor:
+                              AppColors.primaryGreen.withOpacity(0.2),
+                          backgroundColor: AppColors.lightGrey,
+                          labelStyle: TextStyle(
+                            color: _selectedFormat == format
+                                ? AppColors.primaryGreen
+                                : AppColors.mediumGrey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ))
                     .toList(),
               ),
               const SizedBox(height: 28),
@@ -119,7 +119,7 @@ class _ExportReportsScreenState extends State<ExportReportsScreen> {
               _buildSectionHeader('Report Period'),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
-                value: _selectedPeriod,
+                initialValue: _selectedPeriod,
                 decoration: InputDecoration(
                   labelText: 'Period',
                   prefixIcon: const Icon(
@@ -132,9 +132,9 @@ class _ExportReportsScreenState extends State<ExportReportsScreen> {
                 ),
                 items: _periods
                     .map((period) => DropdownMenuItem(
-                  value: period,
-                  child: Text(period),
-                ))
+                          value: period,
+                          child: Text(period),
+                        ))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -288,7 +288,7 @@ class _ExportReportsScreenState extends State<ExportReportsScreen> {
             Switch(
               value: value,
               onChanged: onChanged,
-              activeColor: AppColors.primaryGreen,
+              activeThumbColor: AppColors.primaryGreen,
             ),
           ],
         ),

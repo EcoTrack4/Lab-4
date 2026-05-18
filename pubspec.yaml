@@ -1,0 +1,50 @@
+name: ecotrack
+description: "EcoTrack Namibia — Flutter mobile app for wildlife compliance."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # SUPABASE & AUTHENTICATION
+  supabase_flutter: ^2.5.0
+  flutter_secure_storage: ^9.0.0
+  google_sign_in: ^6.1.0
+  
+  # STATE MANAGEMENT
+  provider: ^6.1.0
+  
+  # ROUTING
+  go_router: ^13.0.0
+  
+  # HTTP & NETWORKING
+  http: ^1.1.0
+  connectivity_plus: ^4.0.0
+  
+  # LOCAL STORAGE (SQLite for offline mode)
+  sqflite_common_ffi: ^2.2.0
+  sqflite: ^2.3.0
+  
+  # UTILITIES
+  intl: ^0.19.0
+  json_serializable: ^6.7.0
+  
+  # UI
+  cupertino_icons: ^1.0.6
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.0
+  json_serializable: ^6.7.0
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

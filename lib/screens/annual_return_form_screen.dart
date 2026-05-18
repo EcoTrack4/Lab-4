@@ -134,7 +134,8 @@ class _AnnualReturnFormScreenState extends State<AnnualReturnFormScreen> {
                     Expanded(
                       child: TextFormField(
                         controller: _quantityController,
-                        decoration: _buildInputDecoration('Quantity', Icons.numbers),
+                        decoration:
+                            _buildInputDecoration('Quantity', Icons.numbers),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
@@ -147,14 +148,14 @@ class _AnnualReturnFormScreenState extends State<AnnualReturnFormScreen> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: _selectedRegion,
+                        initialValue: _selectedRegion,
                         decoration:
                             _buildInputDecoration('Region', Icons.location_on),
                         items: _regions
                             .map((region) => DropdownMenuItem(
-                          value: region,
-                          child: Text(region),
-                        ))
+                                  value: region,
+                                  child: Text(region),
+                                ))
                             .toList(),
                         onChanged: (value) {
                           setState(() {
@@ -195,7 +196,8 @@ class _AnnualReturnFormScreenState extends State<AnnualReturnFormScreen> {
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _dateController,
-                  decoration: _buildInputDecoration('Date of Hunt', Icons.calendar_today),
+                  decoration: _buildInputDecoration(
+                      'Date of Hunt', Icons.calendar_today),
                   readOnly: true,
                   onTap: () async {
                     final date = await showDatePicker(
@@ -342,7 +344,8 @@ class _AnnualReturnFormScreenState extends State<AnnualReturnFormScreen> {
     );
   }
 
-  InputDecoration _buildInputDecoration(String label, IconData icon, {int? maxLines}) {
+  InputDecoration _buildInputDecoration(String label, IconData icon,
+      {int? maxLines}) {
     return InputDecoration(
       labelText: label,
       prefixIcon: Icon(

@@ -137,7 +137,7 @@ class _OfflineSyncStatusScreenState extends State<OfflineSyncStatusScreen> {
                             _offlineModeEnabled = value;
                           });
                         },
-                        activeColor: AppColors.primaryGreen,
+                        activeThumbColor: AppColors.primaryGreen,
                       ),
                     ],
                   ),
