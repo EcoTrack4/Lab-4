@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../services/authentication_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_widgets.dart';
 
@@ -18,18 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
   String _selectedRole = 'hunter'; // 'hunter' or 'officer'
   bool _isLoading = false;
-  late AuthenticationService _authService;
-
-  @override
-  void initState() {
-    super.initState();
-    _initAuthService();
-  }
-
-  Future<void> _initAuthService() async {
-    _authService = AuthenticationService();
-    await _authService.init();
-  }
 
   @override
   void dispose() {
@@ -49,21 +37,19 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final success = await _authService.login(
+      final supabase = Supabase.instance.client;
+      final response = await supabase.auth.signInWithPassword(
         email: _emailController.text,
         password: _passwordController.text,
-        userType: _selectedRole,
       );
 
       if (mounted) {
-        if (success) {
-          if (_selectedRole == 'hunter') {
-            context.go('/hunter-home');
-          } else {
-            context.go('/officer-home');
-          }
+        if (response.user != null) {
+          // Login successful - navigate to welcome screen
+          // Role-based routing will be handled by auth gate
+          context.go('/welcome');
         } else {
-          _showError('Login failed. Invalid username or password.');
+          _showError('Login failed. Invalid email or password.');
         }
       }
     } catch (e) {

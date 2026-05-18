@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../services/authentication_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../services/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_widgets.dart';
 
@@ -24,19 +25,15 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
 
     if (mounted) {
-      final authService = context.read<AuthenticationService>();
-      final isLoggedIn = await authService.isLoggedIn();
-      final userType = authService.getUserType();
+      final supabase = Supabase.instance.client;
+      final session = supabase.auth.currentSession;
 
-      if (isLoggedIn && userType != null) {
-        // Navigate to appropriate landing home
-        if (userType == 'hunter') {
-          context.go('/hunter-home');
-        } else {
-          context.go('/officer-home');
-        }
+      if (session != null) {
+        // User is authenticated, navigate to welcome screen
+        // The actual role-based routing will be handled by the auth gate
+        context.go('/welcome');
       } else {
-        // Navigate to welcome page before login
+        // User is not authenticated, navigate to welcome page
         context.go('/welcome');
       }
     }

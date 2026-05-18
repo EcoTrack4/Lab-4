@@ -42,6 +42,11 @@ ios/Runner.xcworkspace/
 local.properties
 android/local.properties
 
+# Environment variables with secrets
+.env
+.env.local
+.env.*.local
+
 # Ephemeral
 linux/flutter/ephemeral/
 windows/flutter/ephemeral/

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:io';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'services/authentication_service.dart';
+import 'services/auth_service.dart';
+import 'services/ai_service.dart';
 import 'services/returns_service.dart';
 import 'services/database_service.dart';
 import 'services/sync_service.dart';
@@ -27,21 +30,43 @@ import 'screens/user_profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize SQLite FFI for desktop platforms
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
-  
-  // Initialize services
-  final authService = AuthenticationService();
-  await authService.init();
+
+  // ============================================================================
+  // SUPABASE INITIALIZATION
+  // ============================================================================
+  // Credentials loaded from environment variables or dart-define
+  // Use: flutter run --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
+  const String supabaseUrl = String.fromEnvironment('SUPABASE_URL',
+      defaultValue: 'https://pvghpleftkorlafptddk.supabase.co');
+  const String supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY',
+      defaultValue: 'YOUR_SUPABASE_ANON_KEY_HERE');
+
+  // Initialize Supabase with secure local storage
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
+    authOptions: const FlutterAuthClientOptions(
+      localStorage: SecureLocalStorage(),
+    ),
+  );
+
+  // ============================================================================
+  // SERVICE INITIALIZATION
+  // ============================================================================
+  final authService = AuthService();
+  final aiService = AIService(supabaseUrl: supabaseUrl);
 
   runApp(
     MultiProvider(
       providers: [
-        Provider<AuthenticationService>(create: (_) => authService),
+        Provider<AuthService>(create: (_) => authService),
+        Provider<AIService>(create: (_) => aiService),
         Provider<ReturnsService>(create: (_) => ReturnsService()),
         Provider<DatabaseService>(create: (_) => DatabaseService()),
         Provider<SyncService>(
@@ -197,3 +222,29 @@ class _EcoTrackAppState extends State<EcoTrackApp> {
   }
 }
 
+// ============================================================================
+// SECURE LOCAL STORAGE IMPLEMENTATION
+// ============================================================================
+class SecureLocalStorage extends AuthChangeNotifierLocalStorage {
+  final _secureStorage = const FlutterSecureStorage();
+
+  @override
+  Future<String?> read(String key) async {
+    return await _secureStorage.read(key: key);
+  }
+
+  @override
+  Future<void> write(String key, String value) async {
+    await _secureStorage.write(key: key, value: value);
+  }
+
+  @override
+  Future<void> remove(String key) async {
+    await _secureStorage.delete(key: key);
+  }
+
+  @override
+  Future<void> clear() async {
+    await _secureStorage.deleteAll();
+  }
+}

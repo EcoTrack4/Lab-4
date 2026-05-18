@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../services/authentication_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../theme/app_theme.dart';
 
 /// Officer Dashboard - Main page for permit officers to review and approve returns
@@ -28,9 +28,9 @@ class _OfficerDashboardScreenState extends State<OfficerDashboardScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final authService = context.read<AuthenticationService>();
+              final supabase = Supabase.instance.client;
               final router = GoRouter.of(context);
-              await authService.logout();
+              await supabase.auth.signOut();
               if (mounted) {
                 router.go('/welcome');
               }

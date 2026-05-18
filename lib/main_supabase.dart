@@ -52,9 +52,12 @@ void main() async {
   // ✅ Never in SharedPreferences (OWASP M9 compliant)
 
   // ✅ Your Supabase Project Credentials (EcoTrack Namibia)
-  const String supabaseUrl = 'https://pvghpleftkorlafptddk.supabase.co';
-  const String supabaseAnonKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2Z2hwbGVmdGtvcmxhZnB0ZGRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwOTM2OTcsImV4cCI6MjA5NDY2OTY5N30.4HsXNcf06lxhmdnox9-FXQomPMyLSPAIxPu_2mmYedY';
+  // Load from environment variables or dart-define for security
+  // Use: flutter run --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
+  const String supabaseUrl = String.fromEnvironment('SUPABASE_URL',
+      defaultValue: 'https://pvghpleftkorlafptddk.supabase.co');
+  const String supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY',
+      defaultValue: 'YOUR_SUPABASE_ANON_KEY_HERE');
 
   // Initialize Supabase with secure local storage
   // The SecureLocalStorage() passed here stores JWT in Keychain (iOS) / Keystore (Android)

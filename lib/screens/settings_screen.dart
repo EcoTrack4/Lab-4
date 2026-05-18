@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../services/authentication_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../theme/app_theme.dart';
 
 /// Settings Screen - User preferences and app settings
@@ -149,9 +149,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           TextButton(
             onPressed: () async {
-              final authService = context.read<AuthenticationService>();
+              final supabase = Supabase.instance.client;
               final router = GoRouter.of(context);
-              await authService.logout();
+              await supabase.auth.signOut();
               if (mounted) {
                 router.go('/welcome');
               }
